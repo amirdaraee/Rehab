@@ -1,0 +1,23 @@
+ORBBEC ASTRA - TROUBLESHOOTING
+
+Cannot see Color in Orbbec Astra?
+We have noticed that some computers using Orbbec Astra do not display the RGB color view. In case you are facing the same problem, do the following:
+
+0) Close Unity3D.
+1) Navigate to your Nuitrack installation folder (e.g. C:\Program Files\Nuitrack\nuitrack\data).
+2) Open the nuitrack.config file using a text editor.
+3) Find the following entry:
+
+    "AstraProPerseeDepthProvider": {
+        "Windows": {
+            "CameraID": -1
+        }, 
+        "POSIX": {
+            "PID": "0x0501", 
+            "VID": "0x2bc5"
+        }
+    }
+
+4) Change the CameraID value to 0, 1, 2, or 3.
+5) Save the file.
+6) Run Unity3D again.

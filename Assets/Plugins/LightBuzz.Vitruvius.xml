@@ -1,0 +1,2145 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LightBuzz.Vitruvius</name>
+    </assembly>
+    <members>
+        <member name="T:LightBuzz.Vitruvius.Body">
+            <summary>
+            Represents a human Body with skeleton joints and face points.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Body.ID">
+            <summary>
+            The unique identifier of the body.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Body.Joints">
+            <summary>
+            The 3D joints of the body.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Body.Joints2D">
+            <summary>
+            The 2D joints of the body.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Body.Face">
+            <summary>
+            The face of the body.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Body.Floor">
+            <summary>
+            The floor of the body frame.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Body.IsTracked">
+            <summary>
+            Specifies whether the body is tracked or not.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Body.FeetDistanceFromFloor">
+            <summary>
+            Calculates the distance between the feet and the floor.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Body.#ctor">
+            <summary>
+            Creates a new body.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Body.#ctor(LightBuzz.Vitruvius.Body)">
+            <summary>
+            Creates a new body by copying the data of another body.
+            </summary>
+            <param name="other">The source body.</param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Body.Dispose">
+            <summary>
+            Disposes the current instance.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Body.ToJSON">
+            <summary>
+            Converts the current Body object to a JSON-encoded string.
+            </summary>
+            <returns>The JSON-encoded representation of the current Body.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Body.FromJSON(System.String)">
+            <summary>
+            Creates a Body object from a JSON-encoded string.
+            </summary>
+            <param name="json">The JSON-encoded Body.</param>
+            <returns>The corresponding Body object.</returns>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.Constants">
+            <summary>
+            Commonly used constant values.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.Constants.BYTES_PER_PIXEL_WITH_ALPHA">
+            <summary>
+            Bytes per pixel: 4
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.Constants.BYTES_PER_PIXEL_NO_ALPHA">
+            <summary>
+            Bytes per pixel: 3
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.Constants.Culture">
+            <summary>
+            Specifies the Culture used in number formatting.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.SensorType">
+            <summary>
+            The sensor type.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.SensorType.Kinect2">
+            <summary>
+            Microsoft Kinect version 2 (XBOX ONE).
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.SensorType.Nuitrack">
+            <summary>
+            Orbbec Astra Pro or Intel RealSense D435/D415.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.Visualization">
+            <summary>
+            The 2D visualization space.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.Visualization.Image">
+            <summary>
+            Color space. 
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.Visualization.Depth">
+            <summary>
+            Depth/Infrared space.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.Space">
+            <summary>
+            The reference space.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.Space.Screen">
+            <summary>
+            Screen (2D) space.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.Space.World">
+            <summary>
+            World (3D) space.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.JointType">
+            <summary>
+            The joint type.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointType.Head">
+            <summary>
+            Head.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointType.Neck">
+            <summary>
+            Neck.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointType.SpineShoulder">
+            <summary>
+            Middle of shoulders.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointType.SpineMid">
+            <summary>
+            Middle of spine.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointType.SpineBase">
+            <summary>
+            Waist.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointType.ShoulderLeft">
+            <summary>
+            Left shoulder.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointType.ElbowLeft">
+            <summary>
+            Right shoulder.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointType.WristLeft">
+            <summary>
+            Left wrist.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointType.HandLeft">
+            <summary>
+            Left hand.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointType.ShoulderRight">
+            <summary>
+            Right shoulder.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointType.ElbowRight">
+            <summary>
+            Right elbow.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointType.WristRight">
+            <summary>
+            Right wrist.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointType.HandRight">
+            <summary>
+            Right hand.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointType.HipLeft">
+            <summary>
+            Left hip.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointType.KneeLeft">
+            <summary>
+            Left knee.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointType.AnkleLeft">
+            <summary>
+            Left ankle.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointType.FootLeft">
+            <summary>
+            Left foot.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointType.HipRight">
+            <summary>
+            Right hip.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointType.KneeRight">
+            <summary>
+            Right knee.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointType.AnkleRight">
+            <summary>
+            Right ankle.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointType.FootRight">
+            <summary>
+            Right foot.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.SpecialJointType">
+            <summary>
+            Special joint types included in common 3D avatars.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.SpecialJointType.SpineShoulderLeft">
+            <summary>
+            The joint between the left shoulder and the spine.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.SpecialJointType.SpineShoulderRight">
+            <summary>
+            The joint between the right shoulder and the spine.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.BodyExtensions">
+            <summary>
+            Provides extension methods for the <see cref="T:LightBuzz.Vitruvius.Body"/> class.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.BodyExtensions.GetClosestBody(LightBuzz.Vitruvius.Frame)">
+            <summary>
+            Returns the body that is closer to the sensor.
+            </summary>
+            <param name="frame">The sensor frame to search.</param>
+            <returns>The closest body.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.BodyExtensions.Closest(System.Collections.Generic.IList{LightBuzz.Vitruvius.Body})">
+            <summary>
+            Returns the closest body to the camera.
+            </summary>
+            <param name="bodies">A list of bodies.</param>
+            <returns>The closeset body.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.BodyExtensions.GetFarthestBody(LightBuzz.Vitruvius.Frame)">
+            <summary>
+            Returns the body that is farther from the sensor.
+            </summary>
+            <param name="frame">The sensor frame to search.</param>
+            <returns>The farthest body.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.BodyExtensions.Farthest(System.Collections.Generic.IList{LightBuzz.Vitruvius.Body})">
+            <summary>
+            Returns the farthest body to the camera.
+            </summary>
+            <param name="bodies">A list of bodies.</param>
+            <returns>The farthest body.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.BodyExtensions.GetCenterBody(LightBuzz.Vitruvius.Frame)">
+            <summary>
+            Returns the body that is closest to the center of the field of view.
+            </summary>
+            <param name="frame">The sensor frame to search.</param>
+            <returns>The body that is closest to the center of the field of view.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.BodyExtensions.Center(System.Collections.Generic.IList{LightBuzz.Vitruvius.Body})">
+            <summary>
+            Returns the body that is closer to the center of the field of view.
+            </summary>
+            <param name="bodies">A list of bodies.</param>
+            <returns>The body closer to the center of the field of view.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.BodyExtensions.GetLeftBody(LightBuzz.Vitruvius.Frame)">
+            <summary>
+            Returns the leftmost body.
+            </summary>
+            <param name="frame">The sensor frame to search.</param>
+            <returns>The leftmost body.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.BodyExtensions.Left(System.Collections.Generic.IList{LightBuzz.Vitruvius.Body})">
+            <summary>
+            Returns the leftmost body.
+            </summary>
+            <param name="bodies">A list of bodies.</param>
+            <returns>The leftmost body.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.BodyExtensions.GetRightBody(LightBuzz.Vitruvius.Frame)">
+            <summary>
+            Returns the rightmost body.
+            </summary>
+            <param name="frame">The sensor frame to search.</param>
+            <returns>The rightmost body.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.BodyExtensions.Right(System.Collections.Generic.IList{LightBuzz.Vitruvius.Body})">
+            <summary>
+            Returns the rightmost body.
+            </summary>
+            <param name="bodies">A list of bodies.</param>
+            <returns>The rightmost body.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.BodyExtensions.GetActive(LightBuzz.Vitruvius.Frame)">
+            <summary>
+            Returns the most active body.
+            </summary>
+            <param name="frame">The sensor frame to search.</param>
+            <returns>The active body.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.BodyExtensions.Active(System.Collections.Generic.IList{LightBuzz.Vitruvius.Body})">
+            <summary>
+            Returns the body which is between 1.8 and 4.0 meters from the camera and as close to the center of the field of view as possible.
+            </summary>
+            <param name="bodies">A list of bodies.</param>
+            <returns>The active body.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.BodyExtensions.GetMostLeftJoint(LightBuzz.Vitruvius.Frame)">
+            <summary>
+            Returns the leftmost joint.
+            </summary>
+            <param name="frame">The sensor frame to search.</param>
+            <returns>The leftmost point.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.BodyExtensions.MostLeftJoint(System.Collections.Generic.IList{LightBuzz.Vitruvius.Body})">
+            <summary>
+            Returns the leftmost joint.
+            </summary>
+            <param name="bodies">The list of bodies to search.</param>
+            <returns>The leftmost point.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.BodyExtensions.GetMostRightJoint(LightBuzz.Vitruvius.Frame)">
+            <summary>
+            Returns the rightmost joint.
+            </summary>
+            <param name="frame">The sensor frame to search.</param>
+            <returns>The rightmost point.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.BodyExtensions.MostRightJoint(System.Collections.Generic.IList{LightBuzz.Vitruvius.Body})">
+            <summary>
+            Returns the rightmost joint.
+            </summary>
+            <param name="bodies">The list of bodies to search.</param>
+            <returns>The rightmost point.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.BodyExtensions.Height(LightBuzz.Vitruvius.Body)">
+            <summary>
+            Calculates the height of the current person.
+            </summary>
+            <param name="body">The current body.</param>
+            <returns>The height (in meters).</returns>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.ImageExtensions">
+            <summary>
+            Native image manipulation effects.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.ImageExtensions.Crop(System.Byte[],System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Extracts a part of the current image around the specified pivot point.
+            </summary>
+            <param name="originalData">The original uncompressed byte array of the image.</param>
+            <param name="originalWidth">The original width of the image.</param>
+            <param name="originalHeight">The original height of the image.</param>
+            <param name="targetWidth">The target width of the image.</param>
+            <param name="targetHeight">The targer height of the image.</param>
+            <param name="pivotX">The pivot (center) X of the original image</param>
+            <param name="pivotY">The pivot (center) Y of the original image</param>
+            <returns>The new cropped image.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.ImageExtensions.Crop(System.Byte[],LightBuzz.Size,LightBuzz.Size,LightBuzz.Vector2D)">
+            <summary>
+            Extracts a part of the current image around the specified pivot point.
+            </summary>
+            <param name="originalData">The original uncompressed byte array of the image.</param>
+            <param name="originalSize">The original size (width, height) of the image.</param>
+            <param name="targetSize">The requested target size of the image. Should be smaller than the original size.</param>
+            <param name="pivot">The pivot (center) point of the original image.</param>
+            <returns>The new cropped image.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.ImageExtensions.Crop(System.Byte[],LightBuzz.Size,LightBuzz.Size)">
+            <summary>
+            Extracts a part of the current image.
+            </summary>
+            <param name="originalData">The original uncompressed byte array of the image.</param>
+            <param name="originalSize">The original size (width, height) of the image.</param>
+            <param name="targetSize">The requested target size of the image. Should be smaller than the original size.</param>
+            <returns>The new cropped image.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.ImageExtensions.Reverse(System.Byte[])">
+            <summary>
+            Reverses the current byte array image.
+            </summary>
+            <param name="originalData">The original image data to reverse.</param>
+            <returns>The reversed byte array image.</returns>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.Kinect2Extensions">
+            <summary>
+            Common extensions for the Microsoft Kinect v2 sensor.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Kinect2Extensions.ToVector3D(Windows.Kinect.CameraSpacePoint)">
+            <summary>
+            Converts the current Microsoft CameraSpacePoint into its equivalent LightBuzz 3D vector.
+            </summary>
+            <param name="csp">The Microsoft CameraSpacePoint to convert.</param>
+            <returns>The equivalent LightBuzz vector.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Kinect2Extensions.ToCameraSpacePoint(LightBuzz.Vector3D)">
+            <summary>
+            Converts the current LightBuzz 3D vector into its equivalent Microsoft CameraSpacePoint.
+            </summary>
+            <param name="vector">The LightBuzz 3D vector to convert.</param>
+            <returns>The equivalent Microsoft CameraSpacePoint.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Kinect2Extensions.ToVector4D(Windows.Kinect.Vector4)">
+            <summary>
+            Converts the current Microsoft Vector4 into its equivalent LightBuzz 4D vector.
+            </summary>
+            <param name="orientation">The Microsoft Vector4 to convert.</param>
+            <returns>The equivalent LightBuzz 4D vector.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Kinect2Extensions.ToVector4(LightBuzz.Vector4D)">
+            <summary>
+            Converts the current LightBuzz 4D vector into its equivalent Microsoft Vector4.
+            </summary>
+            <param name="vector">The LightBuzz 4D vector to covnert.</param>
+            <returns>The equivalent Microsoft Vector4.</returns>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.MathExtensions">
+            <summary>
+            Common mathematical conversions and utilities.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.MathExtensions.Clamp(System.Single,System.Single,System.Single)">
+            <summary>
+            Clumps the current value to the specified minimum and maximum values.
+            </summary>
+            <param name="value">The value to clamp.</param>
+            <param name="min">The minimum value.</param>
+            <param name="max">The maximum value.</param>
+            <returns>The clamped value.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.MathExtensions.Clamp(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Clumps the current value to the specified minimum and maximum values.
+            </summary>
+            <param name="value">The value to clamp.</param>
+            <param name="min">The minimum value.</param>
+            <param name="max">The maximum value.</param>
+            <returns>The clamped value.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.MathExtensions.Lerp(System.Single,System.Single,System.Single)">
+            <summary>
+            Lerps the current value to the specified limits.
+            </summary>
+            <param name="value">The value to clamp.</param>
+            <param name="from">The minimum value.</param>
+            <param name="to">The maximum value.</param>
+            <returns>The interpolated value.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.MathExtensions.RoundToInt(System.Single)">
+            <summary>
+            Rounds the current floating-point number to its nearest integer.
+            </summary>
+            <param name="num">The number to round.</param>
+            <returns>The resulting integer value.</returns>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.NuitrackExtensions">
+            <summary>
+            Common extensions for the Nuitrack platform.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.NuitrackExtensions.ToVector3D(nuitrack.Vector3)">
+            <summary>
+            Converts the current Nuitrack vector to a LightBuzz vector.
+            </summary>
+            <param name="vector">The Nuitrack vector to convert.</param>
+            <returns>The equivalent LightBuzz vector.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.NuitrackExtensions.ToVector3(LightBuzz.Vector3D)">
+            <summary>
+            Converts the current LightBuzz vector to a Nuitrack vector.
+            </summary>
+            <param name="vector">The LightBuzz vector to convert.</param>
+            <returns>The equivalent Nuitrack vector.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.NuitrackExtensions.ToVector3(UnityEngine.Vector3)">
+            <summary>
+            Converts the current Unity vector to a Nuitrack vector.
+            </summary>
+            <param name="vector">The Unity vector to convert.</param>
+            <returns>The equivalent Nuitrack vector.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.NuitrackExtensions.ToVector4D(nuitrack.Orientation)">
+            <summary>
+            Converts the current Nuitrack orientation to a LightBuzz 4D vector.
+            </summary>
+            <param name="orientation">The Nuitrack orientation to convert.</param>
+            <returns>The equivalent LightBuzz 4D vector.</returns>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.Face">
+            <summary>
+            Represents a human face.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.Face.MAX_FACE_POINTS">
+            <summary>
+            The number of the detected face points.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Face.Points2D">
+            <summary>
+            Face points in the 2D space.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Face.Points3D">
+            <summary>
+            Face points in the 3D space.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Face.#ctor">
+            <summary>
+            Creates a new face.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Face.#ctor(LightBuzz.Vitruvius.Face)">
+            <summary>
+            Creates a new face by copying the data of another face.
+            </summary>
+            <param name="other">The source face.</param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Face.Dispose">
+            <summary>
+            Disposes the current instance.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Face.Nose(LightBuzz.Vitruvius.Space)">
+            <summary>
+            The center of the nose.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Face.Chin(LightBuzz.Vitruvius.Space)">
+            <summary>
+            The chin.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Face.EyeLeft(LightBuzz.Vitruvius.Space)">
+            <summary>
+            The center of the left eye.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Face.EyeRight(LightBuzz.Vitruvius.Space)">
+            <summary>
+            The center of the right eye.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Face.Mouth(LightBuzz.Vitruvius.Space)">
+            <summary>
+            The center of the mouth.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Face.NoseCollection">
+            <summary>
+            Returns the collection of points that belong to the nose.
+            </summary>
+            <returns>A list of points in the 2D space.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Face.EyeLeftCollection">
+            <summary>
+            Returns the collection of points that belong to the left eye.
+            </summary>
+            <returns>A list of points in the 2D space.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Face.EyeRightCollection">
+            <summary>
+            Returns the collection of points that belong to the right eye.
+            </summary>
+            <returns>A list of points in the 2D space.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Face.EyebrowLeftCollection">
+            <summary>
+            Returns the collection of points that belong to the left eyebrow.
+            </summary>
+            <returns>A list of points in the 2D space.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Face.EyebrowRightCollection">
+            <summary>
+            Returns the collection of points that belong to the right eyebrow.
+            </summary>
+            <returns>A list of points in the 2D space.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Face.MouthCollection">
+            <summary>
+            Returns the collection of points that belong to the mouth.
+            </summary>
+            <returns>A list of points in the 2D space.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Face.JawCollection">
+            <summary>
+            Returns the collection of points that belong to the jaw.
+            </summary>
+            <returns>A list of points in the 2D space.</returns>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.DepthFilter">
+            <summary>
+            A depth visualization filter.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.DepthFilter.#ctor">
+            <summary>
+            Creates a new depth filter.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.DepthFilter.UpdateFilter(LightBuzz.Vitruvius.Frame)">
+            <summary>
+            Creates a new depth filter for the given frame.
+            </summary>
+            <param name="frame">The frame containing the raw depth data.</param>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.FrameFilter">
+            <summary>
+            An generic filter
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.FrameFilter.Result">
+            <summary>
+            The processed result.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.FrameFilter.Dispose">
+            <summary>
+            Disposes the current instance and clears any unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.FrameFilter.OnDisposed">
+            <summary>
+            Allows the developer to dispose any additional resources.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.GreenScreenFilter">
+            <summary>
+            A background removal visualization filter.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.GreenScreenFilter.#ctor(LightBuzz.Vitruvius.SensorAdapter)">
+            <summary>
+            Creates a new background removal filter for the given sensor.
+            </summary>
+            <param name="adapter">The sensor adapter containing the raw data.</param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.GreenScreenFilter.UpdateFilter(LightBuzz.Vitruvius.Frame,System.Int32)">
+            <summary>
+            Udpates the current filter with new data.
+            </summary>
+            <param name="frame">The frame containing the raw RGB and depth data.</param>
+            <param name="cutOffsetFromBounds">Specifies whether the processed result shall include a small thresholds outside the points that belong to a body.</param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.GreenScreenFilter.UpdateFilterHD(LightBuzz.Vitruvius.Frame,System.Int32)">
+            <summary>
+            Udpates the current filter with new data, using the high definition RGB array.
+            (Better image quality - Lower performance).
+            </summary>
+            <param name="frame">The frame containing the raw RGB and depth data.</param>
+            <param name="cutOffsetFromBounds">Specifies whether the processed result shall include a small thresholds outside the points that belong to a body.</param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.GreenScreenFilter.OnDisposed">
+            <summary>
+            Allows the developer to dispose any additional resources.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.ResizeFilter">
+            <summary>
+            A visualization filter that resizes the image.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.ResizeFilter.UpdateFilter(System.Byte[],System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Updates the current resize filter.
+            </summary>
+            <param name="data">The raw image data.</param>
+            <param name="width">The original width of the image.</param>
+            <param name="height">The original height of the image.</param>
+            <param name="newWidth">The width of the image after resize.</param>
+            <param name="newHeight">The height of the image after resize.</param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.ResizeFilter.UpdateImageFilter(LightBuzz.Vitruvius.Frame,System.Int32,System.Int32)">
+            <summary>
+            Updates the current resize filter for a Color frame.
+            </summary>
+            <param name="frame">The frame containing the raw data.</param>
+            <param name="newWidth">The width of the image after resize.</param>
+            <param name="newHeight">The height of the image after resize.</param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.ResizeFilter.UpdateDepthFilter(LightBuzz.Vitruvius.Frame,System.Int32,System.Int32)">
+            <summary>
+            Updates the current resize filter for a Depth frame.
+            </summary>
+            <param name="frame">The frame containing the raw data.</param>
+            <param name="newWidth">The width of the image after resize.</param>
+            <param name="newHeight">The height of the image after resize.</param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.ResizeFilter.UpdateDepthFilter(LightBuzz.Vitruvius.DepthFilter,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Updates the current resize filter for a Depth frame.
+            </summary>
+            <param name="depthFilter">The depth filter containing the data.</param>
+            <param name="depthWidth">The original width of the image.</param>
+            <param name="depthHeight">The original height of the image.</param>
+            <param name="newWidth">The width of the image after resize.</param>
+            <param name="newHeight">The height of the image after resize.</param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.ResizeFilter.OnDisposed">
+            <summary>
+            Allows the developer to dispose any additional resources.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.Floor">
+            <summary>
+            Represents a floor plane.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.Floor.MIN_HEIGHT">
+            <summary>
+            The minimum recommended height for placing the sensor.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.Floor.MAX_HEIGHT">
+            <summary>
+            The maximum recommended height for placing the sensor.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Floor.X">
+            <summary>
+            The X value of the floor plane quaternion.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Floor.Y">
+            <summary>
+            The Y value of the floor plane quaternion.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Floor.Z">
+            <summary>
+            The Z value of the floor plane quaternion.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Floor.W">
+            <summary>
+            The W value of the floor plane quaternion.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Floor.Height">
+            <summary>
+            Returns the height of the sensor.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Floor.Tilt">
+            <summary>
+            Returns the tilt angle of the sensor (in degrees).
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Floor.FieldOfView">
+            <summary>
+            Determines whether the field of view is OK.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Floor.Plane">
+            <summary>
+            Returns the floor plane.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Floor.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Creates a new instance of <see cref="T:LightBuzz.Vitruvius.Floor"/>.
+            </summary>
+            <param name="x">The X value of the floor plane quaternion.</param>
+            <param name="y">The Y value of the floor plane quaternion.</param>
+            <param name="z">The Z value of the floor plane quaternion.</param>
+            <param name="w">The W value of the floor plane quaternion.</param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Floor.#ctor(LightBuzz.Vector3D,LightBuzz.Vector3D)">
+            <summary>
+            Creates a new instance of <see cref="T:LightBuzz.Vitruvius.Floor"/>.
+            </summary>
+            <param name="normal">The normal value of the floor plane.</param>
+            <param name="point">The point of a user on floor.</param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Floor.#ctor(LightBuzz.Vitruvius.Floor)">
+            <summary>
+            Creates a new instance of <see cref="T:LightBuzz.Vitruvius.Floor"/> using an existing one.
+            </summary>
+            <param name="other"></param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Floor.#ctor(LightBuzz.Vector4D)">
+            <summary>
+            Creates a new instance of <see cref="T:LightBuzz.Vitruvius.Floor"/>.
+            </summary>
+            <param name="plane">The FloorClipPlane quaternion that describes the floor.</param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Floor.DistanceFrom(LightBuzz.Vector3D)">
+            <summary>
+            Calculates the distance between the specified joint and the floor.
+            </summary>
+            <param name="point">The point to measure the distance from.</param>
+            <returns>The distance between the floor and the point (in meters).</returns>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.FieldOfView">
+            <summary>
+            Specifies whether the Field Of View is OK.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.FieldOfView.OK">
+            <summary>
+            The field of view is OK.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.FieldOfView.Limited">
+            <summary>
+            The field of view is limited.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.Frame">
+            <summary>
+            Represents a camera frame and encapsulates the Color, Depth, Body, Face, and Floor information.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Frame.FrameID">
+            <summary>
+            The unique identifier of the sensor.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Frame.SensorID">
+            <summary>
+            The unique identifier of the sensor.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Frame.ImageData">
+            <summary>
+            THe RGBA color data.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Frame.ImageWidth">
+            <summary>
+            The width of the color frame.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Frame.ImageHeight">
+            <summary>
+            The height of the color frame.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Frame.DepthData">
+            <summary>
+            The depth data (measured in millimeters).
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Frame.DepthWidth">
+            <summary>
+            The width of the depth frame.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Frame.DepthHeight">
+            <summary>
+            The height of the depth frame.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Frame.UserSpaceData">
+            <summary>
+            The annotated user data.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Frame.BodyData">
+            <summary>
+            The tracked <see cref="T:LightBuzz.Vitruvius.Body"/> skeleton data.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Frame.FaceData">
+            <summary>
+            The tracked <see cref="T:LightBuzz.Vitruvius.Face"/> data [deprecated].
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Frame.FloorData">
+            <summary>
+            The floor data.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Frame.IsPlaybackFrame">
+            <summary>
+            Specifies whether the current frame is used as a real-time frame or a video playback frame.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Frame.#ctor(LightBuzz.Vitruvius.Frame)">
+            <summary>
+            Creates a new frame by copying the data of the specified one.
+            </summary>
+            <param name="other">The original frame.</param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Frame.Dispose">
+            <summary>
+            Disposes the current frame and clears the unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Frame.GetBodySilhouette(System.Int32)">
+            <summary>
+            Returns a collection of points that belong to the specified body index.
+            </summary>
+            <param name="bodyIndex">The body index of a player.</param>
+            <returns>A collection of indeces in the user frame that contain the specified player.</returns>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.Joint">
+            <summary>
+            Represents a human body joint in the 3D world space.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Joint.JointTypeIndex">
+            <summary>
+            The index of the joint type.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Joint.JointType">
+            <summary>
+            The type/name of the joint.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Joint.IsTracked">
+            <summary>
+            Returns whether the joint is tracked.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Joint.WorldPosition">
+            <summary>
+            The position of the joint in the 3D world space.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Joint.Confidence">
+            <summary>
+            The tracking confidence of the current joint (0.0 - 1.0).
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Joint.Orientation">
+            <summary>
+            The orientation of the joint.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Joint.#ctor">
+            <summary>
+            Creates a new human body joint.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Joint.#ctor(LightBuzz.Vitruvius.Joint)">
+            <summary>
+            Creates a new human body joint by copying the data of another joint.
+            </summary>
+            <param name="other">The original source joint.</param>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.Joint2D">
+            <summary>
+            Represents a human body joint in the 2D screen space.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Joint2D.JointTypeIndex">
+            <summary>
+            The index of the joint type.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Joint2D.JointType">
+            <summary>
+            The type/name of the joint.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Joint2D.IsTracked">
+            <summary>
+            Returns whether the joint is tracked.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Joint2D.ScreenPosition">
+            <summary>
+            The position of the joint in the 2D screen space.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Joint2D.#ctor">
+            <summary>
+            Creates a new human body joint.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Joint2D.#ctor(LightBuzz.Vitruvius.Joint2D)">
+            <summary>
+            Creates a new human body joint by copying the data of another joint.
+            </summary>
+            <param name="other">The original source joint.</param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Mapper.WorldToImageSpace(LightBuzz.Vitruvius.SensorIntrinsics,System.Int32,System.Int32,LightBuzz.Vector3D)">
+            <summary>
+            Not in use yet
+            </summary>
+            <param name="imageIntrinsics"></param>
+            <param name="width"></param>
+            <param name="height"></param>
+            <param name="worldPoint"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Mapper.WorldToDepthSpace(LightBuzz.Vitruvius.SensorIntrinsics,System.Int32,System.Int32,LightBuzz.Vector3D)">
+            <summary>
+            Not in use yet
+            </summary>
+            <param name="depthIntrinsics"></param>
+            <param name="width"></param>
+            <param name="height"></param>
+            <param name="worldPoint"></param>
+            <returns></returns>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.MappingExtensions">
+            <summary>
+            Provides extension methods for easy mapping.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.MappingExtensions.GetPositionOnPlane(UnityEngine.Vector3,System.Int32,System.Int32,LightBuzz.Vector3D,LightBuzz.Quaternion,LightBuzz.Vector3D)">
+            <summary>
+            Gets a mapped position on a plane in unity's world space.
+            </summary>
+            <param name="position"></param>
+            <param name="width"></param>
+            <param name="height"></param>
+            <param name="planePosition"></param>
+            <param name="planeRotation"></param>
+            <param name="planeScale"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.MappingExtensions.GetPositionOnPlane(UnityEngine.Vector2,System.Int32,System.Int32,LightBuzz.Vector3D,LightBuzz.Quaternion,LightBuzz.Vector3D)">
+            <summary>
+            Gets a mapped position on a plane in unity's world space.
+            </summary>
+            <param name="position"></param>
+            <param name="width"></param>
+            <param name="height"></param>
+            <param name="planePosition"></param>
+            <param name="planeRotation"></param>
+            <param name="planeScale"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.MappingExtensions.GetPositionOnPlane(LightBuzz.Vector2D,System.Int32,System.Int32,LightBuzz.Vector3D,LightBuzz.Quaternion,LightBuzz.Vector3D)">
+            <summary>
+            Gets a mapped position on a plane in unity's world space.
+            </summary>
+            <param name="position"></param>
+            <param name="width"></param>
+            <param name="height"></param>
+            <param name="planePosition"></param>
+            <param name="planeRotation"></param>
+            <param name="planeScale"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.MappingExtensions.GetPositionOnPlane(LightBuzz.Vector3D,System.Int32,System.Int32,LightBuzz.Vector3D,LightBuzz.Quaternion,LightBuzz.Vector3D)">
+            <summary>
+            Gets a mapped position on a plane in unity's world space.
+            </summary>
+            <param name="position"></param>
+            <param name="width"></param>
+            <param name="height"></param>
+            <param name="planePosition"></param>
+            <param name="planeRotation"></param>
+            <param name="planeScale"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.MappingExtensions.WorldToDepthSpace(LightBuzz.Vitruvius.Face,System.Int32,LightBuzz.Vitruvius.SensorAdapter)">
+            <summary>
+            Converts a world face point to depth space.
+            </summary>
+            <param name="face"></param>
+            <param name="faceIndex"></param>
+            <param name="adapter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.NamespaceDoc">
+            <summary>
+            LightBuzz Vitruvius: Body and Face tracking SDK using Kinect, Orbbec, and RealSense cameras.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.SensorAdapter">
+            <summary>
+            Represents a particular sensor (e.g. Kinect v2, Orbbec Astra, Intel RealSense).
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.SensorAdapter.SensorType">
+            <summary>
+            The type of the sensor.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.SensorAdapter.IsConnected">
+            <summary>
+            Returns whether the sensor is connected and detected.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.SensorAdapter.ImageWidth">
+            <summary>
+            The width of the color frame.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.SensorAdapter.ImageHeight">
+            <summary>
+            The height of the color frame.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.SensorAdapter.DepthWidth">
+            <summary>
+            The width of the depth frame.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.SensorAdapter.DepthHeight">
+            <summary>
+            The height of the depth frame.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.SensorAdapter.OnChangedAvailabilityEventHandler">
+            <summary>
+            Raised when the sensor gets connected or disconnected.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.SensorAdapter.TrackFace">
+            <summary>
+            The Flag to whether it shoud be tracking the face or not.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.SensorAdapter.#ctor(LightBuzz.Vitruvius.SensorType)">
+            <summary>
+            Creates a new sensor with the specified type.
+            </summary>
+            <param name="sensorType">The type of the sensor to create.</param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.SensorAdapter.#ctor(LightBuzz.Vitruvius.SensorType,System.String)">
+            <summary>
+            Creates a new sensor with the specified type.
+            </summary>
+            <param name="sensorType">The type of the sensor to create.</param>
+            <param name="ipAddress">The IP address of the body-tracking device (Nuitrack iOS only).</param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.SensorAdapter.Close">
+            <summary>
+            Closes the current sensor.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.SensorAdapter.UpdateFrame">
+            <summary>
+            Updates the frames from the device.
+            </summary>
+            <returns>A new frame, or null.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.SensorAdapter.WorldToDepthSpace(LightBuzz.Vector3D)">
+            <summary>
+            Maps the specified point from the 3D world space to the 2D depth space.
+            </summary>
+            <param name="worldPoint">The point in the 3D space.</param>
+            <returns>The corresponding 2D depth point.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.SensorAdapter.WorldToImageSpace(LightBuzz.Vector3D)">
+            <summary>
+            Maps the specified point from the 3D world space to the 2D color space.
+            </summary>
+            <param name="worldPoint">The point in the 3D space.</param>
+            <returns>The corresponding 2D color point.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.SensorAdapter.DepthToImageSpace(LightBuzz.Vector2D)">
+            <summary>
+            Maps the specified point from the 2D depth space to the 2D color space.
+            </summary>
+            <param name="depthPoint">The point in the 2D depth space.</param>
+            <returns>The corresponding 2D color point.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.SensorAdapter.DepthToImageSpace(LightBuzz.Vector2D,System.Int32)">
+            <summary>
+            Maps the specified point from the 2D depth space to the 2D color space.
+            </summary>
+            <param name="depthPoint">The point in the 2D depth space.</param>
+            <param name="index">The index of the point in the depth array.</param>
+            <returns>The corresponding 2D color point.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.SensorAdapter.ImageToDepthSpace(LightBuzz.Vector2D)">
+            <summary>
+            Maps the specified 2D color point to the 2D depth space.
+            </summary>
+            <param name="colorPoint">The color point to map.</param>
+            <returns>The corresponding 2D depth point.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.SensorAdapter.DepthPointsToImageSpace">
+            <summary>
+            Maps the depth points of the current frame to the color space.
+            </summary>
+            <returns>The corresponding array of 2D color points.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.SensorAdapter.DepthPointsToImageSpace(LightBuzz.Vitruvius.Frame)">
+            <summary>
+            Maps the depth points of the specified frame to the color space.
+            </summary>
+            <param name="frame">The frame to map.</param>
+            <returns>The corresponding array of 2D color points.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.SensorAdapter.ImagePointsToDepthSpace">
+            <summary>
+            Maps the color points of the current frame to the depth space.
+            </summary>
+            <returns>The corresponding array of 2D depth points.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.SensorAdapter.ImagePointsToDepthSpace(LightBuzz.Vitruvius.Frame)">
+            <summary>
+            Maps the color points of the specified frame to the depth space.
+            </summary>
+            <param name="frame">The frame to map.</param>
+            <returns>The corresponding array of 2D depth points.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.SensorAdapter.DepthToWorldSpace(LightBuzz.Vector2D)">
+            <summary>
+            Maps the specified 2D depth point to the 3D world space.
+            </summary>
+            <param name="depthPoint">The depth point to map.</param>
+            <returns>The corresponding 3D point.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.SensorAdapter.ImageToWorldSpace(LightBuzz.Vector2D)">
+            <summary>
+            Maps the specified 2D color point to the 3D world space.
+            </summary>
+            <param name="imagePoint">The color point to map.</param>
+            <returns>The corresponding 3D point.</returns>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.SensorEventArgs">
+            <summary>
+            Custom event argument that returns the type of the sensor and whether it's connected.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.SensorEventArgs.SensorType">
+            <summary>
+            Returns the type of the sensor.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.SensorEventArgs.IsConnected">
+            <summary>
+            Returns whether the sensor is connected and detected.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.SensorIntrinsics">
+            <summary>
+            Encapsulates the internal intrinsic values of a sensor device.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.SensorIntrinsics.FocalLength">
+            <summary>
+            The distance between the centre of a lens or curved mirror and its focus.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.SensorIntrinsics.PrincipalPoint">
+            <summary>
+            The at the intersection of the optical axis and the image plane.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.SensorIntrinsics.RadialDistortion">
+            <summary>
+            The radial distortion of the lens.
+            X: second
+            Y: fourth
+            Z: sixth.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.SensorIntrinsics.IsDefault">
+            <summary>
+            Returns whether the focal point is the default one (has its X value equal to 0).
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.NuitrackSensor.#ctor(System.String)">
+            <summary>
+            Initializes a new Nuitrack sensor.
+            </summary>
+            <param name="ipAddress">The IP address, if Nuitrack is used over WiFi.</param>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.PlaybackSettings">
+            <summary>
+            The video playback settings.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.PlaybackSettings.sourceFolder">
+            <summary>
+            The source folder of the recorded video.
+            E.g. <code>C:\Users\LightBuzz\Documents\Video\</code>
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.PlaybackSettings.fileName">
+            <summary>
+            The name of the frames without a suffix.
+            E.g. Frame_1.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.PlaybackSettings.imageData">
+            <summary>
+            Specifies whether the video player should update the color image data.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.PlaybackSettings.depthData">
+            <summary>
+            Specifies whether the video player should update the depth image data.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.PlaybackSettings.userSpaceData">
+            <summary>
+            Specifies whether the video player should update the user image data.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.RecordingSettings">
+            <summary>
+            The video recording settings.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.RecordingSettings.destinationFolder">
+            <summary>
+            The destination folder of the video.
+            E.g. <code>C:\Users\LightBuzz\Documents\Video\</code>
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.RecordingSettings.fileName">
+            <summary>
+            The name of the frames without a suffix.
+            E.g. Frame_1.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.RecordingSettings.imageData">
+            <summary>
+            Specifies whether the video recorder should record the color image data.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.RecordingSettings.depthData">
+            <summary>
+            Specifies whether the video recorder should record the depth image data.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.RecordingSettings.userSpaceData">
+            <summary>
+            Specifies whether the video recorder should record the user image data.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.RecordingSettings.bodyData">
+            <summary>
+            Specifies whether the video recorder should record the body, face, and floor data.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.AvateeringUtility">
+            <summary>
+            A utility class for mapping human bones and joints to Unity bones and joints.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.AvateeringUtility.humanBoneList">
+            <summary>
+            The human bones.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.AvateeringUtility.specialHumanBoneList">
+            <summary>
+            Additional human bones included only in Unity.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.AvateeringUtility.humanBodyBoneToJointType">
+            <summary>
+            Maps human body bone to joint type as index (normal view).
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.AvateeringUtility.humanBodyBoneToSpecialJointType">
+            <summary>
+            Maps the human joints to their Unity-only equivalents.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.AvateeringUtility.jointTypeToHumanBodyBone">
+            <summary>
+            Maps the human joints as indeces to human body bones (normal view).
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.AvateeringUtility.specialJointTypeToHumanBodyBone">
+            <summary>
+            Maps the Unity-only joints to their human equivalents.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.AvateeringUtility.jointTypeToFlippedJointType">
+            <summary>
+            Maps the human joints to their mirrored equivalents.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.AvateeringUtility.specialJointTypeToFlippedSpecialJointType">
+            <summary>
+            Maps the human joints to their Unity-only mirrored equivalents.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.AvateeringUtility.specialJointTypeToJointType">
+            <summary>
+            Maps the Unity-only joints to their human mirrored equivalents.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.Bone">
+            <summary>
+            Represents a human bone.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Bone.Transform">
+            <summary>
+            The transform of the bone.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Bone.OriginalRotation">
+            <summary>
+            The original rotation of the bone.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Bone.CalibrateOriginalRotation">
+            <summary>
+            Calibrates the original rotation of the bone.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Bone.Update(LightBuzz.Quaternion,System.Single,System.Single)">
+            <summary>
+            Updates the rotation of the current bone.
+            </summary>
+            <param name="rotation">The new rotation.</param>
+            <param name="delta">The rotation delta (defaults to 1).</param>
+            <param name="smoothness">The rotation smoothnes (defaults to 0).</param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Bone.Reset">
+            <summary>
+            Resets the rotation of the current bone.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.UnityExtensions">
+            <summary>
+            Common extensions for the Unity3D platform.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.UnityExtensions.ToStringDetailed(UnityEngine.Vector2)">
+            <summary>
+            Displays the current vector as a detailed string.
+            </summary>
+            <param name="vector">The vector to display.</param>
+            <returns>A detailed string representation of the elements of the vector.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.UnityExtensions.ToStringDetailed(UnityEngine.Vector3)">
+            <summary>
+            Displays the current vector as a detailed string.
+            </summary>
+            <param name="vector">The vector to display.</param>
+            <returns>A detailed string representation of the elements of the vector.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.UnityExtensions.ToStringDetailed(UnityEngine.Vector4)">
+            <summary>
+            Displays the current vector as a detailed string.
+            </summary>
+            <param name="vector">The vector to display.</param>
+            <returns>A detailed string representation of the elements of the vector.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.UnityExtensions.ToStringDetailed(UnityEngine.Color)">
+            <summary>
+            Displays the current color as a detailed string.
+            </summary>
+            <param name="color">The vector to display.</param>
+            <returns>A detailed string representation of the RGBA elements of the color.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.UnityExtensions.ToStringDetailed(UnityEngine.Color32)">
+            <summary>
+            Displays the current color as a detailed string.
+            </summary>
+            <param name="color">The vector to display.</param>
+            <returns>A detailed string representation of the RGBA elements of the color.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.UnityExtensions.ToStringDetailed(LightBuzz.Vector2D)">
+            <summary>
+            Displays the current vector as a detailed string.
+            </summary>
+            <param name="vector">The vector to display.</param>
+            <returns>A detailed string representation of the elements of the vector.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.UnityExtensions.ToStringDetailed(LightBuzz.Vector3D)">
+            <summary>
+            Displays the current vector as a detailed string.
+            </summary>
+            <param name="vector">The vector to display.</param>
+            <returns>A detailed string representation of the elements of the vector.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.UnityExtensions.ToStringDetailed(LightBuzz.Vector4D)">
+            <summary>
+            Displays the current vector as a detailed string.
+            </summary>
+            <param name="vector">The vector to display.</param>
+            <returns>A detailed string representation of the elements of the vector.</returns>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.JointUpdateProperties">
+            <summary>
+            Specifies which joints will be updates while Avateering.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointUpdateProperties.update">
+            <summary>
+            Specifies whether the avatar will be updated.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointUpdateProperties.head">
+            <summary>
+            Update the <see cref="F:LightBuzz.Vitruvius.JointType.Head"/> joint?
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointUpdateProperties.neck">
+            <summary>
+            Update the <see cref="F:LightBuzz.Vitruvius.JointType.Neck"/> joint?
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointUpdateProperties.spineShoulder">
+            <summary>
+            Update the <see cref="F:LightBuzz.Vitruvius.JointType.SpineShoulder"/> joint?
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointUpdateProperties.spineMid">
+            <summary>
+            Update the <see cref="F:LightBuzz.Vitruvius.JointType.SpineMid"/> joint?
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointUpdateProperties.spineBase">
+            <summary>
+            Update the <see cref="F:LightBuzz.Vitruvius.JointType.SpineBase"/> joint?
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointUpdateProperties.shoulderLeft">
+            <summary>
+            Update the <see cref="F:LightBuzz.Vitruvius.JointType.ShoulderLeft"/> joint?
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointUpdateProperties.elbowLeft">
+            <summary>
+            Update the <see cref="F:LightBuzz.Vitruvius.JointType.ElbowLeft"/> joint?
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointUpdateProperties.wristLeft">
+            <summary>
+            Update the <see cref="F:LightBuzz.Vitruvius.JointType.WristLeft"/> joint?
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointUpdateProperties.shoulderRight">
+            <summary>
+            Update the <see cref="F:LightBuzz.Vitruvius.JointType.ShoulderRight"/> joint?
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointUpdateProperties.elbowRight">
+            <summary>
+            Update the <see cref="F:LightBuzz.Vitruvius.JointType.ElbowRight"/> joint?
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointUpdateProperties.wristRight">
+            <summary>
+            Update the <see cref="F:LightBuzz.Vitruvius.JointType.WristRight"/> joint?
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointUpdateProperties.hipLeft">
+            <summary>
+            Update the <see cref="F:LightBuzz.Vitruvius.JointType.HipLeft"/> joint?
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointUpdateProperties.kneeLeft">
+            <summary>
+            Update the <see cref="F:LightBuzz.Vitruvius.JointType.KneeLeft"/> joint?
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointUpdateProperties.ankleLeft">
+            <summary>
+            Update the <see cref="F:LightBuzz.Vitruvius.JointType.AnkleLeft"/> joint?
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointUpdateProperties.hipRight">
+            <summary>
+            Update the <see cref="F:LightBuzz.Vitruvius.JointType.HipRight"/> joint?
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointUpdateProperties.kneeRight">
+            <summary>
+            Update the <see cref="F:LightBuzz.Vitruvius.JointType.KneeRight"/> joint?
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointUpdateProperties.ankleRight">
+            <summary>
+            Update the <see cref="F:LightBuzz.Vitruvius.JointType.AnkleRight"/> joint?
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.JointUpdateProperties.smoothness">
+            <summary>
+            Specifies how smooth the avateering motion will be.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.Model">
+            <summary>
+            Represents an animatable avatar.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Model.IsInitialized">
+            <summary>
+            Specifies whether the model is initialized.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Model.AvatarRoot">
+            <summary>
+            The root of the avatar game object.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Model.Flipped">
+            <summary>
+            Specifies whether the model is mirrored.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Model.PreBaseJoint">
+            <summary>
+            The pre base point of the model.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Model.Bones">
+            <summary>
+            The bones of the model.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Model.UpdateProperties">
+            <summary>
+            Returns the udpate properties of the model.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Model.PreloadPose">
+            <summary>
+            The pose of the model before loading.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Model.PostloadPose">
+            <summary>
+            The pose of the model after loading.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.Model.ModelMovement">
+            <summary>
+            Represents the different model movement variations.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.Model.ModelMovement.LockFeet">
+            <summary>
+            The model stays on a fixed spot.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.Model.ModelMovement.MoveInWorld">
+            <summary>
+            The model is freely moving in the virtual 3D space.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.Model.ModelMovement.Manual">
+            <summary>
+            The model is moving manually.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Model.Movement">
+            <summary>
+            Gets or sets the movement of the model.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Model.RootToFeetOffset">
+            <summary>
+            Gets or sets the offset of the feet from the ground plane.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Model.JumpAmplifier">
+            <summary>
+            Gets or sets the jump amplifier of the model.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Model.Initialize">
+            <summary>
+            Initializes the current model.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Model.Dispose">
+            <summary>
+            Disposes the current model and clears any unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Model.Reset">
+            <summary>
+            Resets the position and rotation of the current model.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Model.ChangeAvatar(UnityEngine.GameObject)">
+            <summary>
+            Switchs the 3D avatar object of the current model.
+            </summary>
+            <param name="newAvatar">The new 3D model avatar.</param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Model.DoAvateering(LightBuzz.Vitruvius.Body)">
+            <summary>
+            Animates the current model using the specified <see cref="T:LightBuzz.Vitruvius.Body"/> object.
+            </summary>
+            <param name="body">The body to use for the animation.</param>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.Pose">
+            <summary>
+            Represents the pose of an animatable avatar.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Vitruvius.Pose.orientations">
+            <summary>
+            The orientations of the avatar.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Pose.GetPose(LightBuzz.Vitruvius.Model)">
+            <summary>
+            Returns the pose of the specified avatar.
+            </summary>
+            <param name="model">The 3D model of the avatar.</param>
+            <returns>The pose of the model.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Pose.SetPose(LightBuzz.Vitruvius.Model,LightBuzz.Vitruvius.Pose)">
+            <summary>
+            Sets the specified pose to the specified avatar.
+            </summary>
+            <param name="model">The 3D model of the avatar.</param>
+            <param name="pose">The pose to apply to the model.</param>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.Buffer">
+            <summary>
+            Provides buffering functionality for multi-threaded video recording.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Buffer.QueueLength">
+            <summary>
+            Returns the length of the buffer queue.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Buffer.Started">
+            <summary>
+            Returns whether the buffer has started.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.Buffer.IsBuffering">
+            <summary>
+            Specifies whether the buffer is currently active.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Buffer.Start">
+            <summary>
+            Starts the buffer.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Buffer.Stop">
+            <summary>
+            Stops the buffer.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Buffer.Add(LightBuzz.Vitruvius.IBufferedObject)">
+            <summary>
+            Adds an <see cref="T:LightBuzz.Vitruvius.IBufferedObject"/> in the buffer queue.
+            </summary>
+            <param name="obj">The object to add.</param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Buffer.Remove">
+            <summary>
+            Removes an <see cref="T:LightBuzz.Vitruvius.IBufferedObject"/> from the buffer.
+            </summary>
+            <returns>The removed object.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Buffer.Clear">
+            <summary>
+            Clears the buffer. Should be called when the buffer has stopped.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.IBufferedObject">
+            <summary>
+            Represents an object that can be used as a buffer.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.IBufferedObject.Run">
+            <summary>
+            Adds the object to the buffer.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.IBufferedObject.Dispose">
+            <summary>
+            Disposes the object and clears any unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Serialization.ToJSON(System.Collections.Generic.IEnumerable{LightBuzz.Vitruvius.Body})">
+            <summary>
+            Serializes the current collection of <see cref="T:LightBuzz.Vitruvius.Body"/> to JSON.
+            </summary>
+            <param name="bodies">The body collection to serialize.</param>
+            <returns>A JSON representation of the current body collection.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Serialization.ToJSON(LightBuzz.Vitruvius.Body)">
+            <summary>
+            Serializes the current <see cref="T:LightBuzz.Vitruvius.Body"/> to JSON.
+            </summary>
+            <param name="body">The body to serialize.</param>
+            <returns>A JSON representation of the current body.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Serialization.ToJSON(LightBuzz.Vitruvius.Joint)">
+            <summary>
+            Serializes the current <see cref="T:LightBuzz.Vitruvius.Joint"/> to JSON.
+            </summary>
+            <param name="joint">The joint to serialize.</param>
+            <returns>A JSON representation of the current joint.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.Serialization.ToJSON(LightBuzz.Vitruvius.Floor)">
+            <summary>
+            Converts a <see cref="T:LightBuzz.Vitruvius.Floor"/> to JSON.
+            </summary>
+            <param name="floor">The floor to serialize.</param>
+            <returns>A JSON representation of the current Floor.</returns>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.VideoPlayer">
+            <summary>
+            Plays a recorded video with 3D and 2D information.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.VideoPlayer.IsPlaying">
+            <summary>
+            Checks whether the video is currently playing.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.VideoPlayer.IsPaused">
+            <summary>
+            Checks whether the video is curretly paused.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.VideoPlayer.Speed">
+            <summary>
+            The speed of the video playback (0 - 5).
+            Examples:
+            0.0: no playback
+            0.5: half of the normal speed
+            1.0: normal speed
+            2.0: double speed
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.VideoPlayer.IsSeeking">
+            <summary>
+            Returns whether the video player is currently seeking among frames.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.VideoPlayer.Seek">
+            <summary>
+            Seeks to the specified frame index.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.VideoPlayer.Loop">
+            <summary>
+            Determines whether the video will loop after finishing playing.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.VideoPlayer.FrameCount">
+            <summary>
+            Returns the number of frames the video has.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.VideoPlayer.ElapsedTime">
+            <summary>
+            Returns the time elapsed.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.VideoPlayer.ClipTime">
+            <summary>
+            Returns the duration of the video clip.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.VideoPlayer.OnStartPlaying">
+            <summary>
+            Raised when the video starts playing.
+            </summary>
+        </member>
+        <member name="E:LightBuzz.Vitruvius.VideoPlayer.onStartPlaying">
+            <summary>
+            Raised when the video starts playing.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.VideoPlayer.OnFrameLoaded">
+            <summary>
+            Raised when a frame is loaded.
+            </summary>
+        </member>
+        <member name="E:LightBuzz.Vitruvius.VideoPlayer.onFrameLoaded">
+            <summary>
+            Raised when a frame is loaded.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.VideoPlayer.OnPaused">
+            <summary>
+            Raised when the video is paused.
+            </summary>
+        </member>
+        <member name="E:LightBuzz.Vitruvius.VideoPlayer.onPaused">
+            <summary>
+            Raised when the video is paused.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.VideoPlayer.OnUnpaused">
+            <summary>
+            Raised when the video is unpaused.
+            </summary>
+        </member>
+        <member name="E:LightBuzz.Vitruvius.VideoPlayer.onUnpaused">
+            <summary>
+            Raised when the video is unpaused.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.VideoPlayer.OnStoppedPlaying">
+            <summary>
+            Raised when the video is stopped.
+            </summary>
+        </member>
+        <member name="E:LightBuzz.Vitruvius.VideoPlayer.onStoppedPlaying">
+            <summary>
+            Raised when the video is stopped.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.VideoPlayer.OnStartedSeeking">
+            <summary>
+            Raised when the video starts seeking.
+            </summary>
+        </member>
+        <member name="E:LightBuzz.Vitruvius.VideoPlayer.onStartedSeeking">
+            <summary>
+            Raised when the video starts seeking.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.VideoPlayer.OnSeeking">
+            <summary>
+            Raised when the video seeks to a frame.
+            </summary>
+        </member>
+        <member name="E:LightBuzz.Vitruvius.VideoPlayer.onSeeking">
+            <summary>
+            Raised when the video seeks to a frame.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.VideoPlayer.OnStoppedSeeking">
+            <summary>
+            Raised when the video stops seeking.
+            </summary>
+        </member>
+        <member name="E:LightBuzz.Vitruvius.VideoPlayer.onStoppedSeeking">
+            <summary>
+            Raised when the video stops seeking.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.VideoPlayer.OnLooped">
+            <summary>
+            Raised when the video loops.
+            </summary>
+        </member>
+        <member name="E:LightBuzz.Vitruvius.VideoPlayer.onLooped">
+            <summary>
+            Raised when the video loops.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.VideoPlayer.OnPlaybackEnded">
+            <summary>
+            Raised when the video stops playing.
+            </summary>
+        </member>
+        <member name="E:LightBuzz.Vitruvius.VideoPlayer.onPlaybackEnded">
+            <summary>
+            Raised when the video stops playing.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.VideoPlayer.Dispose">
+            <summary>
+            Disposes the video player.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.VideoPlayer.Start(LightBuzz.Vitruvius.PlaybackSettings)">
+            <summary>
+            Starts the playing the video using the specified settings.
+            </summary>
+            <param name="settings">The video playback settings.</param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.VideoPlayer.Stop">
+            <summary>
+            Stops playing the video.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.VideoPlayer.Load">
+            <summary>
+            Loads the proper video frame.
+            </summary>
+            <returns>The proper sensor frame.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.VideoPlayer.ImportTimeMetadata(LightBuzz.Vitruvius.PlaybackSettings)">
+            <summary>
+            Imports the time metadata of the recorded frames in Ticks.
+            </summary>
+            <param name="settings">The playback settings to use.</param>
+            <returns>Returns the imported time spans.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.VideoPlayer.ImportTimeSpans(LightBuzz.Vitruvius.PlaybackSettings)">
+            <summary>
+            Imports the time spans of the recorded frames in Ticks.
+            </summary>
+            <param name="settings">The playback settings to use.</param>
+            <returns>Returns the imported time spans.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.VideoPlayer.ToTimeSpans(System.String[])">
+            <summary>
+            Converts TimeSpan Ticks to TimeSpan.
+            </summary>
+            <param name="timeTicks">The time ticks as imported from ImportTimeMetadata.</param>
+            <returns></returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.VideoPlayer.Import(System.Int32,LightBuzz.Vitruvius.PlaybackSettings)">
+            <summary>
+            Imports a Frame of specified index using the given playback settings.
+            </summary>
+            <param name="index">The index of the frame.</param>
+            <param name="settings">The playback settings to use.</param>
+            <returns>Returns the imported frame.</returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.VideoPlayer.WorldToDepthSpace(LightBuzz.Vitruvius.JointType,LightBuzz.Vitruvius.Frame,LightBuzz.Vitruvius.Body)">
+            <summary>
+            Converts a world point to depth space.
+            </summary>
+            <param name="joint">The imported joint.</param>
+            <param name="frame">The imported frame.</param>
+            <param name="body">The imported body.</param>
+            <returns></returns>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.VideoPlayer.WorldToImageSpace(LightBuzz.Vitruvius.JointType,LightBuzz.Vitruvius.Frame,LightBuzz.Vitruvius.Body)">
+            <summary>
+            Converts a world point to image space.
+            </summary>
+            <param name="joint">The imported joint.</param>
+            <param name="frame">The imported frame.</param>
+            <param name="body">The imported body.</param>
+            <returns></returns>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.VideoRecorder">
+            <summary>
+            Records sensor data in the 3D and 2D spaces.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.VideoRecorder.QueueLength">
+            <summary>
+            The size of the recording buffer.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.VideoRecorder.FrameCount">
+            <summary>
+            The number of frames recorded.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.VideoRecorder.IsRecording">
+            <summary>
+            Checks whether the recorder is currently recording frames.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Vitruvius.VideoRecorder.IsBuffering">
+            <summary>
+            Checks whether the recorder is currently saving frames in the background.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.VideoRecorder.OnSavingCompleted">
+            <summary>
+            Raised when the recorder has finished saving frames.
+            </summary>
+            <param name="framesSaved">The number of frames saved.</param>
+        </member>
+        <member name="E:LightBuzz.Vitruvius.VideoRecorder.onSavingCompleted">
+            <summary>
+            Raised when the recorder has finished saving frames.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.VideoRecorder.Start">
+            <summary>
+            Starts recording.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.VideoRecorder.Stop">
+            <summary>
+            Stops recording.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.VideoRecorder.Record(LightBuzz.Vitruvius.Frame,LightBuzz.Vitruvius.RecordingSettings)">
+            <summary>
+            Records the specified frame using the specified settings.
+            </summary>
+            <param name="frame">The sensor frame to record.</param>
+            <param name="settings">The recording settings.</param>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.VideoRecorder.Export(LightBuzz.Vitruvius.Frame,System.Int32,LightBuzz.Vitruvius.RecordingSettings)">
+            <summary>
+            Exports a Frame with an index and the given recording settigs.
+            </summary>
+            <param name="frame">The frame to export.</param>
+            <param name="index">The index of the frame.</param>
+            <param name="settings">The recording settings to use.</param>
+            <returns>Returns result message.</returns>
+        </member>
+        <member name="T:LightBuzz.Vitruvius.VideoHelper">
+            <summary>
+            A static helper class for frame Export and Import
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Vitruvius.VideoHelper.ExportFrame(System.String,LightBuzz.Vitruvius.MetaFrame)">
+            <summary>
+            Exports the specified data to the specified path.
+            </summary>
+            <param name="path">The path where data will be exported.</param>
+            <param name="frame">The frame to export.</param>
+            <returns>Returns result message.</returns>
+        </member>
+    </members>
+</doc>
