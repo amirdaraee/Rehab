@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Assets.Scripts.Utilities;
 using UnityEngine;
 
 namespace Data
@@ -32,8 +33,6 @@ namespace Data
 
                     finalString += str;
                 }
-
-                finalString += GetTimeStamp();
                 sw.WriteLine(finalString);
 
             }
@@ -86,10 +85,6 @@ namespace Data
         {
             return GetDirectoryPath() + "/" + _reportFileName;
         }
-        static string GetTimeStamp()
-        {
-            return System.DateTime.Now.ToString();
-        }  
         #endregion
     }
 }

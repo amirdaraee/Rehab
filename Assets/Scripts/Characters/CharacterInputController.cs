@@ -3,6 +3,7 @@ using UnityEngine;
 using LightBuzz;
 using LightBuzz.Vitruvius;
 using System.Collections.Generic;
+using Assets.Scripts.Utilities;
 using Quaternion = UnityEngine.Quaternion;
 
 /// <summary>
@@ -219,17 +220,23 @@ public class CharacterInputController : MonoBehaviour
             Body body = frame.GetClosestBody();
             if (body != null)
             {
+                string[] angles = new string[3];
+
                 leftAngle = CalcAngle(
                     body.Joints[JointType.SpineShoulder].WorldPosition,
                     body.Joints[JointType.ShoulderLeft].WorldPosition,
                     body.Joints[JointType.ElbowLeft].WorldPosition);
                 Debug.Log(indexer + "   Calculating Left Angle: " + leftAngle.RoundToInt());
+                
                 rightAngle = CalcAngle(
                     body.Joints[JointType.SpineShoulder].WorldPosition,
                     body.Joints[JointType.ShoulderRight].WorldPosition,
                     body.Joints[JointType.ElbowRight].WorldPosition);
                 Debug.Log(indexer + "   Calculating Right Angle: " + rightAngle.RoundToInt());
 
+                angles[0] = leftAngle.ToString();
+                angles[1] = rightAngle.ToString();
+                angles[2] = Utilities.GetTimeStamp();
                 //Debug.Log("Left angle:" + leftAngle);
                 //Debug.Log("Right angle:" + rightAngle);
 
