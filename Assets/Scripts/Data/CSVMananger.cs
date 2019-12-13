@@ -1,5 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using Assets.Scripts.Utilities;
+using Boo.Lang;
 using UnityEngine;
 
 namespace Data
@@ -21,20 +24,56 @@ namespace Data
         {
             VerfyDirectory();
             VerfiyFile();
-            using (StreamWriter sw = File.AppendText(GetFilePath()))
+            try
             {
-                var finalString = "";
-                foreach (var str in strings)
+                using (StreamWriter sw = File.AppendText(GetFilePath()))
                 {
-                    if (finalString != "")
+                    var finalString = "";
+                    foreach (var str in strings)
                     {
-                        finalString += _reportSeperator;
+                        if (finalString != "")
+                        {
+                            finalString += _reportSeperator;
+                        }
+
+                        finalString += str;
                     }
-
-                    finalString += str;
+                    sw.WriteLine(finalString);
                 }
-                sw.WriteLine(finalString);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
 
+        public static void AppendAnglesToReport(System.Collections.Generic.List<Angles> angles)
+        {
+            VerfyDirectory();
+            VerfiyFile();
+            try
+            {
+                using (StreamWriter sw = File.AppendText(GetFilePath()))
+                {
+                    var finalString = "";
+                    foreach (var angle in angles)
+                    {
+                        finalString += angle.LeftAngle;
+                        finalString += _reportSeperator;
+                        finalString += angle.RightAngle;
+                        finalString += _reportSeperator;
+                        finalString += angle.TimeStamp;
+
+                        sw.WriteLine(finalString);
+                        finalString = "";
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
             }
         }
         public static void CreateReport()
@@ -85,6 +124,7 @@ namespace Data
         {
             return GetDirectoryPath() + "/" + _reportFileName;
         }
+
         #endregion
     }
 }

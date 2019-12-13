@@ -4,6 +4,7 @@ using LightBuzz;
 using LightBuzz.Vitruvius;
 using System.Collections.Generic;
 using Assets.Scripts.Utilities;
+using Data;
 using Quaternion = UnityEngine.Quaternion;
 
 /// <summary>
@@ -23,6 +24,9 @@ public class CharacterInputController : MonoBehaviour
     private bool _hansUp = false;
 
     private float indexer = 0.0f;
+
+    public List<Angles> _anglesList = new List<Angles>();
+
     #endregion
 
     static int s_DeadHash = Animator.StringToHash("Dead");
@@ -37,7 +41,7 @@ public class CharacterInputController : MonoBehaviour
     public CharacterCollider characterCollider;
     public GameObject blobShadow;
     public float laneChangeSpeed = 1.0f;
-    
+
 
     public int maxLife = 3;
 
@@ -220,54 +224,63 @@ public class CharacterInputController : MonoBehaviour
             Body body = frame.GetClosestBody();
             if (body != null)
             {
-                string[] angles = new string[3];
+                Angles angles = new Angles();
 
                 leftAngle = CalcAngle(
                     body.Joints[JointType.SpineShoulder].WorldPosition,
                     body.Joints[JointType.ShoulderLeft].WorldPosition,
                     body.Joints[JointType.ElbowLeft].WorldPosition);
-                Debug.Log(indexer + "   Calculating Left Angle: " + leftAngle.RoundToInt());
-                
+                //Debug.Log(indexer + "   Calculating Left Angle: " + leftAngle.RoundToInt());
+
                 rightAngle = CalcAngle(
                     body.Joints[JointType.SpineShoulder].WorldPosition,
                     body.Joints[JointType.ShoulderRight].WorldPosition,
                     body.Joints[JointType.ElbowRight].WorldPosition);
-                Debug.Log(indexer + "   Calculating Right Angle: " + rightAngle.RoundToInt());
+                //Debug.Log(indexer + "   Calculating Right Angle: " + rightAngle.RoundToInt());
 
-                angles[0] = leftAngle.ToString();
-                angles[1] = rightAngle.ToString();
-                angles[2] = Utilities.GetTimeStamp();
+                angles.LeftAngle = leftAngle.ToString();
+                angles.RightAngle = rightAngle.ToString();
+                angles.TimeStamp = Utilities.GetTimeStamp();
+
+                _anglesList.Add(angles);
+
+                if (_anglesList.Count > 1000)
+                {
+                    CSVMananger.AppendAnglesToReport(_anglesList);
+                    _anglesList.Clear();
+                    Debug.Log("CSVManager Called!");
+                }
                 //Debug.Log("Left angle:" + leftAngle);
                 //Debug.Log("Right angle:" + rightAngle);
 
                 if (leftAngle.RoundToInt() < lowarmAngleThreshold && rightAngle.RoundToInt() < lowarmAngleThreshold)
                 {
                     _hansUp = false;
-                    Debug.Log(indexer + "   Both hands angle is below " + lowarmAngleThreshold + " so _hansUp is " + _hansUp);
+                    //Debug.Log(indexer + "   Both hands angle is below " + lowarmAngleThreshold + " so _hansUp is " + _hansUp);
 
                 }
                 else
                 {
-                    Debug.Log(indexer + "   One hand angle is more than " + lowarmAngleThreshold + " so _hansUp is " + _hansUp);
+                    //Debug.Log(indexer + "   One hand angle is more than " + lowarmAngleThreshold + " so _hansUp is " + _hansUp);
                 }
 
                 if (!_hansUp)
                 {
-                    Debug.Log(indexer + "   User can now go right or left");
+                    //Debug.Log(indexer + "   User can now go right or left");
 
                     // Use key input in editor or standalone
                     if (Input.GetKeyDown(KeyCode.LeftArrow) || leftAngle.RoundToInt() > hightArmAngleThreshold)
                     {
                         ChangeLane(-1);
                         _hansUp = true;
-                        Debug.Log(indexer + "   <color=red>User moved left</color> so _handsUp is " + _hansUp);
+                        //Debug.Log(indexer + "   <color=red>User moved left</color> so _handsUp is " + _hansUp);
 
                     }
                     else if (Input.GetKeyDown(KeyCode.RightArrow) || rightAngle.RoundToInt() > hightArmAngleThreshold)
                     {
                         ChangeLane(1);
                         _hansUp = true;
-                        Debug.Log(indexer + "   <color=red>User moved right</color> so _handsUp is " + _hansUp);
+                        //Debug.Log(indexer + "   <color=red>User moved right</color> so _handsUp is " + _hansUp);
 
                     }
                     else if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -278,16 +291,16 @@ public class CharacterInputController : MonoBehaviour
                     {
                         if (!m_Sliding)
                             Slide();
-                    } 
+                    }
                 }
                 else
                 {
-                    Debug.Log(indexer + "   User can not move");
+                    //Debug.Log(indexer + "   User can not move");
 
                 }
 
                 indexer++;
-                Debug.Log(indexer + "   <color=yellow>Indexer changed</color>");
+                //Debug.Log(indexer + "   <color=yellow>Indexer changed</color>");
 
             }
 
@@ -524,4 +537,11 @@ public class CharacterInputController : MonoBehaviour
         return angle;
     }
 
+}
+
+public class Angles
+{
+    public string LeftAngle { get; set; }
+    public string RightAngle { get; set; }
+    public string TimeStamp { get; set; }
 }
