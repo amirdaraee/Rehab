@@ -539,7 +539,7 @@ public class CharacterInputController : MonoBehaviour
 
 }
 
-public class Angles
+public struct Angles
 {
     public string LeftAngle { get; set; }
     public string RightAngle { get; set; }
